@@ -11,7 +11,7 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 });
 
 // Base URL of your Spring Boot backend
-const baseUrl = "http://localhost:8080/api/donors";
+const baseUrl = "https://e-blood-donation-system.onrender.com/api/donors";
 
 // Donor form submission handler
 document.getElementById('donorForm').addEventListener('submit', function (e) {
