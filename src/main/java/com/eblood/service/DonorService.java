@@ -15,8 +15,14 @@ public class DonorService {
     private DonorRepository donorRepository;
 
     public Donor saveDonor(Donor donor) {
+    try {
         return donorRepository.save(donor);
+    } catch (Exception e) {
+        e.printStackTrace(); // print full stack trace
+        return null;
     }
+}
+
 
     public List<Donor> getAllDonors() {
         return donorRepository.findAll();

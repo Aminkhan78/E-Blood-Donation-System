@@ -17,23 +17,58 @@ const baseUrl = "http://localhost:8080/api/donors";
 document.getElementById('donorForm').addEventListener('submit', function (e) {
   e.preventDefault();
 
-  // Fetching form data
+  // Fetch form input values
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const bloodGroup = document.getElementById("bloodGroup").value.trim();
+  const city = document.getElementById("city").value.trim();
+  const phoneNumber = document.getElementById("phoneNumber").value.trim();
+
+  // Construct donor object to match backend fields
   const donor = {
-    name: document.getElementById("name").value.trim(),
-    bloodGroup: document.getElementById("bloodGroup").value.trim(),
-    city: document.getElementById("city").value.trim(),
-    phoneNumber: document.getElementById("phoneNumber").value.trim()
+    name: name,
+    email: email,
+    bloodGroup: bloodGroup,
+    location: city,        // Java field: location
+    contact: phoneNumber   // Java field: contact
   };
 
-  // Validation
+  // Manual validation of each field (match HTML input IDs)
   let valid = true;
-  for (let key in donor) {
-    if (!donor[key]) {
-      valid = false;
-      document.getElementById(key).style.border = '2px solid red';
-    } else {
-      document.getElementById(key).style.border = '1px solid #ccc';
-    }
+
+  if (!name) {
+    document.getElementById("name").style.border = '2px solid red';
+    valid = false;
+  } else {
+    document.getElementById("name").style.border = '1px solid #ccc';
+  }
+
+  if (!email) {
+    document.getElementById("email").style.border = '2px solid red';
+    valid = false;
+  } else {
+    document.getElementById("email").style.border = '1px solid #ccc';
+  }
+
+  if (!bloodGroup) {
+    document.getElementById("bloodGroup").style.border = '2px solid red';
+    valid = false;
+  } else {
+    document.getElementById("bloodGroup").style.border = '1px solid #ccc';
+  }
+
+  if (!city) {
+    document.getElementById("city").style.border = '2px solid red';
+    valid = false;
+  } else {
+    document.getElementById("city").style.border = '1px solid #ccc';
+  }
+
+  if (!phoneNumber) {
+    document.getElementById("phoneNumber").style.border = '2px solid red';
+    valid = false;
+  } else {
+    document.getElementById("phoneNumber").style.border = '1px solid #ccc';
   }
 
   if (!valid) {
@@ -41,7 +76,7 @@ document.getElementById('donorForm').addEventListener('submit', function (e) {
     return;
   }
 
-  // API Call to register donor
+  // Send data to backend
   fetch(baseUrl + "/add", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -51,7 +86,7 @@ document.getElementById('donorForm').addEventListener('submit', function (e) {
     .then(data => {
       alert("Thank you for registering as a donor!");
       document.getElementById("donorForm").reset();
-      fetchDonors(); // Refresh donor list
+      fetchDonors();
     })
     .catch(error => {
       console.error("Error:", error);
@@ -72,8 +107,8 @@ function fetchDonors() {
           <td>${donor.id}</td>
           <td>${donor.name}</td>
           <td>${donor.bloodGroup}</td>
-          <td>${donor.city}</td>
-          <td>${donor.phoneNumber}</td>
+          <td>${donor.location}</td>
+          <td>${donor.contact}</td>
           <td><button onclick="deleteDonor(${donor.id})">Delete</button></td>
         </tr>`;
         tbody.innerHTML += row;

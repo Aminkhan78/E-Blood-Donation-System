@@ -1,10 +1,12 @@
 package com.eblood.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
 
 @Entity
 @Table(name = "donor")
@@ -16,8 +18,13 @@ public class Donor {
 
     private String name;
     private String email;
+
+    @Column(name = "blood_group")
     private String bloodGroup;
+
     private String location;
+
+    @Column(name = "contact")
     private String contact;
 
     // Constructors
